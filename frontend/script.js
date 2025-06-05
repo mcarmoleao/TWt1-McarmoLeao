@@ -1,5 +1,5 @@
-const apiUrl = 'http://localhost:3001/alunos';
-const cursosUrl = 'http://localhost:3001/api/cursos';
+const apiUrl = 'https://twt1-mcarmoleao.onrender.com';
+const cursosUrl = 'https://twt1-mcarmoleao.onrender.com';
 
 const listaAlunos = document.getElementById('listaAlunos');
 const form = document.getElementById('alunoForm');
@@ -34,7 +34,7 @@ async function carregarAlunos() {
 // Carregar lista de cursos
 async function carregarCursos() {
   try {
-    const res = await fetch('http://localhost:3001/api/cursos');
+    const res = await fetch('https://twt1-mcarmoleao.onrender.com/api/cursos');
 
     if (!res.ok) {
       throw new Error(`Erro na resposta: ${res.status}`);
