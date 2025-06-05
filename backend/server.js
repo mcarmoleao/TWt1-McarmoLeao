@@ -22,3 +22,8 @@ app.listen(3001, () => {
   console.log('Servidor a correr na porta 3001');
 });
 
+app.get('/', (req, res) => {
+  res.send('API de Alunos e Cursos em funcionamento.');
+});
+
+

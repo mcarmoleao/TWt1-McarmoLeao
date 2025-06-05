@@ -16,20 +16,28 @@ function mostrarMensagem(texto, cor = 'green') {
   setTimeout(() => mensagemDiv.textContent = '', 3000);
 }
 
-// Carregar lista de alunos
 async function carregarAlunos() {
   listaAlunos.innerHTML = '';
-  const res = await fetch(apiUrl);
-  const alunos = await res.json();
-  alunos.forEach(aluno => {
-    const li = document.createElement('li');
-    li.innerHTML = `
-      <span>${aluno.nome} ${aluno.apelido} - ${aluno.curso} (${aluno.anoCurricular}º ano)</span>
-      <button onclick="removerAluno('${aluno._id}')">Remover</button>
-    `;
-    listaAlunos.appendChild(li);
-  });
+  try {
+    const res = await fetch('https://twt1-mcarmoleao.onrender.com/alunos');
+    if (!res.ok) {
+      throw new Error(`Erro ao buscar alunos: ${res.status} ${res.statusText}`);
+    }
+    const alunos = await res.json();
+    alunos.forEach(aluno => {
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <span>${aluno.nome} ${aluno.apelido} - ${aluno.curso} (${aluno.anoCurricular}º ano)</span>
+        <button onclick="removerAluno('${aluno._id}')">Remover</button>
+      `;
+      listaAlunos.appendChild(li);
+    });
+  } catch (error) {
+    console.error(error);
+    listaAlunos.innerHTML = '<li>Erro ao carregar alunos.</li>';
+  }
 }
+
 
 // Carregar lista de cursos
 async function carregarCursos() {
