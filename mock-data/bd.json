@@ -1,0 +1,75 @@
+{
+  "alunos": [
+    {
+      "id": "1",
+      "nome": "João",
+      "apelido": "Silva",
+      "curso": "ECGM",
+      "anoCurricular": 1
+    },
+    {
+      "id": "2",
+      "nome": "Maria",
+      "apelido": "Pereira",
+      "curso": "EI",
+      "anoCurricular": 2
+    },
+    {
+      "id": "3",
+      "nome": "Carolina",
+      "apelido": "Sousa e Silva",
+      "curso": "EI",
+      "anoCurricular": 4
+    }
+  ],
+  "cursos": [
+    {
+      "nomeDoCurso": "Design de Ambientes",
+      "id": "70f5"
+    },
+    {
+      "nomeDoCurso": "Design do Produto",
+      "id": "edd7"
+    },
+    {
+      "nomeDoCurso": "Engenharia Alimentar",
+      "id": "92d7"
+    },
+    {
+      "nomeDoCurso": "Engenharia Civil e do Ambiente",
+      "id": "f3a1"
+    },
+    {
+      "nomeDoCurso": "Engenharia de Computação Gráfica e Multimédia",
+      "id": "b2c3"
+    },
+    {
+      "nomeDoCurso": "Engenharia de Redes e Sistemas de Computadores",
+      "id": "c4d5"
+    },
+    {
+      "nomeDoCurso": "Engenharia Informática",
+      "id": "e6f7"
+    },
+    {
+      "nomeDoCurso": "Engenharia Mecânica",
+      "id": "g8h9"
+    },
+        {
+      "nomeDoCurso": "Engenharia Mecatrónica",
+      "id": "g8h9"
+    },
+        {
+      "nomeDoCurso": "Gastronomia e Artes Culinárias",
+      "id": "g8h9"
+    },
+        {
+      "nomeDoCurso": "Gestão",
+      "id": "g8h9"
+    },
+        {
+      "nomeDoCurso": "Turismo",
+      "id": "g8h9"
+    }
+  ]
+}
