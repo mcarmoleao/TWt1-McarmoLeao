@@ -1,5 +1,5 @@
-const apiUrl = 'https://twt1-mcarmoleao.onrender.com';
-const cursosUrl = 'https://twt1-mcarmoleao.onrender.com';
+const apiUrl = 'https://twt1-mcarmoleao.onrender.com/alunos'; // Endpoint alunos
+const cursosUrl = 'https://twt1-mcarmoleao.onrender.com/api/cursos'; // Endpoint cursos
 
 const listaAlunos = document.getElementById('listaAlunos');
 const form = document.getElementById('alunoForm');
@@ -19,7 +19,7 @@ function mostrarMensagem(texto, cor = 'green') {
 async function carregarAlunos() {
   listaAlunos.innerHTML = '';
   try {
-    const res = await fetch('https://twt1-mcarmoleao.onrender.com/alunos');
+    const res = await fetch(apiUrl);
     if (!res.ok) {
       throw new Error(`Erro ao buscar alunos: ${res.status} ${res.statusText}`);
     }
@@ -38,19 +38,14 @@ async function carregarAlunos() {
   }
 }
 
-
 // Carregar lista de cursos
 async function carregarCursos() {
   try {
-    const res = await fetch('https://twt1-mcarmoleao.onrender.com/api/cursos');
-
+    const res = await fetch(cursosUrl);
     if (!res.ok) {
       throw new Error(`Erro na resposta: ${res.status}`);
     }
-
     const cursos = await res.json();
-
-    // Exemplo de como preencher o <select id="curso">
     const selectCurso = document.getElementById('curso');
     cursos.forEach(curso => {
       const option = document.createElement('option');
@@ -63,7 +58,6 @@ async function carregarCursos() {
   }
 }
 
-
 // Submeter novo aluno
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -74,33 +68,45 @@ form.addEventListener('submit', async (e) => {
     curso: cursoInput.value
   };
 
-  // Verificar campos vazios
   if (!novoAluno.nome || !novoAluno.apelido || !novoAluno.anoCurricular || !novoAluno.curso) {
     mostrarMensagem('Por favor preencha todos os campos', 'red');
     return;
   }
 
-  const res = await fetch(apiUrl, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(novoAluno),
-  });
+  try {
+    const res = await fetch(apiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(novoAluno),
+    });
 
-  if (res.status === 409) {
-    mostrarMensagem('Aluno já existente', 'red');
-  } else if (res.ok) {
-    mostrarMensagem('Aluno adicionado com sucesso', 'green');
-    form.reset();
-    carregarAlunos();
-  } else {
-    mostrarMensagem('Erro ao adicionar aluno', 'red');
+    if (res.status === 409) {
+      mostrarMensagem('Aluno já existente', 'red');
+    } else if (res.ok) {
+      mostrarMensagem('Aluno adicionado com sucesso', 'green');
+      form.reset();
+      carregarAlunos();
+    } else {
+      mostrarMensagem('Erro ao adicionar aluno', 'red');
+    }
+  } catch (error) {
+    console.error(error);
+    mostrarMensagem('Erro na comunicação com o servidor', 'red');
   }
 });
 
 // Remover aluno
 async function removerAluno(id) {
-  await fetch(`${apiUrl}/${id}`, { method: 'DELETE' });
-  carregarAlunos();
+  try {
+    const res = await fetch(`${apiUrl}/${id}`, { method: 'DELETE' });
+    if (!res.ok) {
+      throw new Error(`Erro ao remover aluno: ${res.status}`);
+    }
+    carregarAlunos();
+  } catch (error) {
+    console.error(error);
+    mostrarMensagem('Erro ao remover aluno', 'red');
+  }
 }
 
 // Inicializar
