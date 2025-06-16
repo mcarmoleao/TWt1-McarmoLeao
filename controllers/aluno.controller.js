@@ -40,3 +40,14 @@ exports.editAluno = async (req, res) => {
     res.status(400).json({ message: 'Erro ao atualizar aluno', error });
   }
 };
+
+exports.getAlunoById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const aluno = await Aluno.findById(id);
+    if (!aluno) return res.status(404).json({ message: 'Aluno não encontrado' });
+    res.json(aluno);
+  } catch (error) {
+    res.status(400).json({ message: 'Erro ao buscar aluno', error });
+  }
+};
