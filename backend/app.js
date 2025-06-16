@@ -11,7 +11,7 @@ app.use(express.json());
 mongoose.connect('mongodb+srv://user1:12345@cluster0.d47mvin.mongodb.net/', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-});
+}); 
 
 // Rotas
 app.use('/alunos', alunoRoutes);
