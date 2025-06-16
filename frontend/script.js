@@ -29,6 +29,7 @@ async function carregarAlunos() {
       li.innerHTML = `
         <span>${aluno.nome} ${aluno.apelido} - ${aluno.curso} (${aluno.anoCurricular}º ano)</span>
         <button onclick="removerAluno('${aluno._id}')">Remover</button>
+        <button onclick="editarAluno('${aluno._id}')">Editar</button>
       `;
       listaAlunos.appendChild(li);
     });
@@ -106,6 +107,46 @@ async function removerAluno(id) {
   } catch (error) {
     console.error(error);
     mostrarMensagem('Erro ao remover aluno', 'red');
+  }
+}
+
+// Função para editar aluno
+async function editarAluno(id) {
+  try {
+    // Buscar dados atuais do aluno
+    const res = await fetch(`${apiUrl}/${id}`);
+    if (!res.ok) throw new Error('Erro ao buscar aluno');
+    const aluno = await res.json();
+
+    // Pedir novos dados ao usuário (pode ser melhorado para um formulário modal)
+    const novoNome = prompt('Editar nome:', aluno.nome);
+    if (novoNome === null) return; // Cancelado
+    const novoApelido = prompt('Editar apelido:', aluno.apelido);
+    if (novoApelido === null) return;
+    const novoAno = prompt('Editar ano curricular:', aluno.anoCurricular);
+    if (novoAno === null) return;
+    const novoCurso = prompt('Editar curso:', aluno.curso);
+    if (novoCurso === null) return;
+
+    const alunoAtualizado = {
+      nome: novoNome.trim(),
+      apelido: novoApelido.trim(),
+      anoCurricular: novoAno.trim(),
+      curso: novoCurso.trim()
+    };
+
+    // Enviar atualização para o backend
+    const updateRes = await fetch(`${apiUrl}/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(alunoAtualizado)
+    });
+    if (!updateRes.ok) throw new Error('Erro ao atualizar aluno');
+    mostrarMensagem('Aluno atualizado com sucesso', 'green');
+    carregarAlunos();
+  } catch (error) {
+    console.error(error);
+    mostrarMensagem('Erro ao editar aluno', 'red');
   }
 }
 
