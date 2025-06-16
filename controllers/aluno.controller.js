@@ -26,12 +26,17 @@ exports.deleteAluno = async (req, res) => {
 exports.editAluno = async (req, res) => {
   const { id } = req.params;
   const { nome, apelido, anoCurricular, curso } = req.body;
-
-  const alunoAtualizado = await Aluno.findByIdAndUpdate(id, { nome, apelido, anoCurricular, curso }, { new: true });
-  
-  if (!alunoAtualizado) {
-    return res.status(404).json({ message: 'Aluno não encontrado' });
+  try {
+    const alunoAtualizado = await Aluno.findByIdAndUpdate(
+      id,
+      { nome, apelido, anoCurricular, curso },
+      { new: true, runValidators: true }
+    );
+    if (!alunoAtualizado) {
+      return res.status(404).json({ message: 'Aluno não encontrado' });
+    }
+    res.json(alunoAtualizado);
+  } catch (error) {
+    res.status(400).json({ message: 'Erro ao atualizar aluno', error });
   }
-
-  res.json(alunoAtualizado);
-}
+};
