@@ -6,5 +6,6 @@ router.get('/', alunoController.getAlunos);
 router.post('/', alunoController.addAluno);
 router.delete('/:id', alunoController.deleteAluno);
 router.put('/:id', alunoController.editAluno);
+router.get('/:id', alunoController.getAlunoById);
 
 module.exports = router;

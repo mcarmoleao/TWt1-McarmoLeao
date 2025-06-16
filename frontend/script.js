@@ -1,4 +1,4 @@
-const apiUrl = 'https://twt1-mcarmoleao.onrender.com/alunos'; // Endpoint alunos
+const apiUrl = 'https://twt1-mcarmoleao.onrender.com/api/alunos'; // Endpoint alunos
 const cursosUrl = 'https://twt1-mcarmoleao.onrender.com/api/cursos'; // Endpoint cursos
 
 const listaAlunos = document.getElementById('listaAlunos');
