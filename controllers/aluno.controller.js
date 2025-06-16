@@ -22,3 +22,16 @@ exports.deleteAluno = async (req, res) => {
   await Aluno.findByIdAndDelete(id);
   res.status(204).end();
 };
+
+exports.editAluno = async (req, res) => {
+  const { id } = req.params;
+  const { nome, apelido, anoCurricular, curso } = req.body;
+
+  const alunoAtualizado = await Aluno.findByIdAndUpdate(id, { nome, apelido, anoCurricular, curso }, { new: true });
+  
+  if (!alunoAtualizado) {
+    return res.status(404).json({ message: 'Aluno não encontrado' });
+  }
+
+  res.json(alunoAtualizado);
+}
