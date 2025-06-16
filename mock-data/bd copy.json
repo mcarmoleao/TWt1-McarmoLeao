@@ -1,29 +1,5 @@
+[
 {
-  "alunos": [
-    {
-      "id": "1",
-      "nome": "João",
-      "apelido": "Silva",
-      "curso": "ECGM",
-      "anoCurricular": 1
-    },
-    {
-      "id": "2",
-      "nome": "Maria",
-      "apelido": "Pereira",
-      "curso": "EI",
-      "anoCurricular": 2
-    },
-    {
-      "id": "3",
-      "nome": "Carolina",
-      "apelido": "Sousa e Silva",
-      "curso": "EI",
-      "anoCurricular": 4
-    }
-  ],
-  "cursos": [
-    {
       "nomeDoCurso": "Design de Ambientes",
       "id": "70f5"
     },
@@ -71,5 +47,4 @@
       "nomeDoCurso": "Turismo",
       "id": "g8h9"
     }
-  ]
-}
+]
