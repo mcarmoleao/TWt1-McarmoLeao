@@ -1,16 +1,23 @@
-
 {
   "alunos": [
     {
+      "id": 1,
       "nome": "Joana",
       "apelido": "Silva",
-      "curso": 1,
-      "anoCurricular": 2,
-      "idade" : 21
+      "curso": "Engenharia Informática",
+      "anoCurricular": 2
+    },
+    {
+      "id": 2,
+      "nome": "Miguel",
+      "apelido": "Ferreira",
+      "curso": "Design Multimédia",
+      "anoCurricular": 1
     }
   ],
   "cursos": [
-    { "id" : 1, "nomeDoCurso": "Engenharia da Computação Gráfica e Multimédia" },
-    { "id" : 2, "nomeDoCurso": "Engenharia de Redes e Sistemas de Computadores" }
+    { "id": 1, "nomeDoCurso": "Engenharia Informática" },
+    { "id": 2, "nomeDoCurso": "Design Multimédia" },
+    { "id": 3, "nomeDoCurso": "Gestão" }
   ]
 }

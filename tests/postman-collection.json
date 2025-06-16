@@ -1,31 +1,179 @@
 {
-	"info": {
-		"_postman_id": "94e5168c-bdf4-4c00-b873-26a1a9368165",
-		"name": "postman_collection",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "414713"
-	},
-	"item": [
-		{
-			"name": "obter alunos",
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:3000/alunos",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"alunos"
-					]
-				}
-			},
-			"response": []
-		}
-	]
+  "info": {
+    "_postman_id": "94e5168c-bdf4-4c00-b873-26a1a9368165",
+    "name": "CRUD dos Alunos e Cursos (Maria do Carmo Leão)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Alunos",
+      "item": [
+        {
+          "name": "Listar Alunos",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "localhost:3000/alunos",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["alunos"]
+            }
+          }
+        },
+        {
+          "name": "Obter alunos por ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "localhost:3000/alunos/1",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["alunos", "1"]
+            }
+          }
+        },
+        {
+          "name": "Criar aluno",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "localhost:3000/alunos",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["alunos"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Ana\",\n  \"apelido\": \"Santos\",\n  \"curso\": 1,\n  \"anoCurricular\": 3\n}"
+            }
+          }
+        },
+        {
+          "name": "Atualizar Aluno",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "localhost:3000/alunos/1",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["alunos", "1"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Timóteo\",\n  \"apelido\": \"Gres\",\n  \"curso\": 1,\n  \"anoCurricular\": 3\n}"
+            }
+          }
+        },
+        {
+          "name": "Apagar aluno",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "localhost:3000/alunos/1",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["alunos", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cursos",
+      "item": [
+        {
+          "name": "Listar cursos",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "localhost:3000/cursos",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["cursos"]
+            }
+          }
+        },
+        {
+          "name": "Obter curso por ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "localhost:3000/cursos/1",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["cursos", "1"]
+            }
+          }
+        },
+        {
+          "name": "Criar curso",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "localhost:3000/cursos",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["cursos"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nomeDoCurso\": \"Novo Curso de Engenharia\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Atualizar Curso",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "localhost:3000/cursos/1",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["cursos", "1"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nomeDoCurso\": \"Curso Atualizado\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Deletar Curso",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "localhost:3000/cursos/1",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["cursos", "1"]
+            }
+          }
+        }
+      ]
+    }
+  ]
 }
