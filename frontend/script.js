@@ -1,5 +1,5 @@
 const apiUrl = 'http://localhost:3001/alunos'; // Endpoint alunos
-const cursosUrl = 'https://twt1-mcarmoleao.onrender.com/api/cursos'; // Endpoint cursos
+const cursosUrl = 'http://localhost:3001/cursos'; // Endpoint cursos
 
 const listaAlunos = document.getElementById('listaAlunos');
 const form = document.getElementById('alunoForm');
@@ -8,6 +8,8 @@ const apelidoInput = document.getElementById('apelido');
 const anoCurricularInput = document.getElementById('anoCurricular');
 const cursoInput = document.getElementById('curso');
 const mensagemDiv = document.getElementById('mensagem');
+
+let alunoEditandoId = null;
 
 // Mostrar mensagens de feedback
 function mostrarMensagem(texto, cor = 'green') {
@@ -62,33 +64,51 @@ async function carregarCursos() {
 // Submeter novo aluno
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
-  const novoAluno = {
+  const alunoData = {
     nome: nomeInput.value.trim(),
     apelido: apelidoInput.value.trim(),
     anoCurricular: anoCurricularInput.value.trim(),
     curso: cursoInput.value
   };
 
-  if (!novoAluno.nome || !novoAluno.apelido || !novoAluno.anoCurricular || !novoAluno.curso) {
+  if (!alunoData.nome || !alunoData.apelido || !alunoData.anoCurricular || !alunoData.curso) {
     mostrarMensagem('Por favor preencha todos os campos', 'red');
     return;
   }
 
   try {
-    const res = await fetch(apiUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(novoAluno),
-    });
-
-    if (res.status === 409) {
-      mostrarMensagem('Aluno já existente', 'red');
-    } else if (res.ok) {
-      mostrarMensagem('Aluno adicionado com sucesso', 'green');
-      form.reset();
-      carregarAlunos();
+    if (alunoEditandoId) {
+      // Atualizar aluno existente
+      const res = await fetch(`${apiUrl}/${alunoEditandoId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(alunoData)
+      });
+      if (res.ok) {
+        mostrarMensagem('Aluno atualizado com sucesso', 'green');
+        form.reset();
+        alunoEditandoId = null;
+        form.querySelector('button[type="submit"]').textContent = 'Adicionar Aluno';
+        carregarAlunos();
+      } else {
+        mostrarMensagem('Erro ao atualizar aluno', 'red');
+      }
     } else {
-      mostrarMensagem('Erro ao adicionar aluno', 'red');
+      // Adicionar novo aluno
+      const res = await fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(alunoData),
+      });
+      if (res.status === 409) {
+        mostrarMensagem('Aluno já existente', 'red');
+      } else if (res.ok) {
+        mostrarMensagem('Aluno adicionado com sucesso', 'green');
+        form.reset();
+        carregarAlunos();
+      } else {
+        mostrarMensagem('Erro ao adicionar aluno', 'red');
+      }
     }
   } catch (error) {
     console.error(error);
@@ -113,40 +133,18 @@ async function removerAluno(id) {
 // Função para editar aluno
 async function editarAluno(id) {
   try {
-    // Buscar dados atuais do aluno
     const res = await fetch(`${apiUrl}/${id}`);
     if (!res.ok) throw new Error('Erro ao buscar aluno');
     const aluno = await res.json();
-
-    // Pedir novos dados ao usuário (pode ser melhorado para um formulário modal)
-    const novoNome = prompt('Editar nome:', aluno.nome);
-    if (novoNome === null) return; // Cancelado
-    const novoApelido = prompt('Editar apelido:', aluno.apelido);
-    if (novoApelido === null) return;
-    const novoAno = prompt('Editar ano curricular:', aluno.anoCurricular);
-    if (novoAno === null) return;
-    const novoCurso = prompt('Editar curso:', aluno.curso);
-    if (novoCurso === null) return;
-
-    const alunoAtualizado = {
-      nome: novoNome.trim(),
-      apelido: novoApelido.trim(),
-      anoCurricular: novoAno.trim(),
-      curso: novoCurso.trim()
-    };
-
-    // Enviar atualização para o backend
-    const updateRes = await fetch(`${apiUrl}/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(alunoAtualizado)
-    });
-    if (!updateRes.ok) throw new Error('Erro ao atualizar aluno');
-    mostrarMensagem('Aluno atualizado com sucesso', 'green');
-    carregarAlunos();
+    nomeInput.value = aluno.nome;
+    apelidoInput.value = aluno.apelido;
+    anoCurricularInput.value = aluno.anoCurricular;
+    cursoInput.value = aluno.curso;
+    alunoEditandoId = id;
+    form.querySelector('button[type="submit"]').textContent = 'Guardar Alterações';
   } catch (error) {
     console.error(error);
-    mostrarMensagem('Erro ao editar aluno', 'red');
+    mostrarMensagem('Erro ao carregar dados do aluno', 'red');
   }
 }
 

@@ -11,7 +11,7 @@ const alunosRouter = require('./routes/alunos.routes');
 app.use('/alunos', alunosRouter);
 
 const cursosRouter = require('./routes/cursos.routes');
-app.use('/api/cursos', cursosRouter);
+app.use('/cursos', cursosRouter);
 
 mongoose.connect('mongodb+srv://user1:12345@cluster0.d47mvin.mongodb.net/academicos')
   .then(() => console.log('Ligado ao MongoDB'))
